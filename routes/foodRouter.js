@@ -1,20 +1,9 @@
-const express = require('express')
-const foodRouter = express.Router()
-const {addFood,listFood,removeFood} = require('../controllers/foodController')
-const multer = require('multer')
+const express = require('express');
+const foodRouter = express.Router();
+const { addFood, listFood, removeFood } = require('../controllers/foodController');
 
-//image storage engine
-const storage = multer.diskStorage({
-    destination:"uploads",
-    filename:(req,file,cb)=>{
-        return cb(null,`${Date.now()}${file.originalname}`)
-    }
-})
+foodRouter.post('/add', addFood);
+foodRouter.get('/list', listFood);
+foodRouter.delete('/remove', removeFood);
 
-const upload = multer({storage})
-
-foodRouter.post('/add',upload.single("image"),addFood)
-foodRouter.get('/list',listFood)
-foodRouter.delete('/remove',removeFood)
-
-module.exports = foodRouter
+module.exports = foodRouter;
